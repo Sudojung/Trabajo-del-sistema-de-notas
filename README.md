@@ -1,21 +1,21 @@
 # Sistema de Notas - UNMSM
 
-Proyecto académico que simula un sistema básico de notas tipo SUM UNMSM.
+Proyecto académico desarrollado en C++ inspirado en el Sistema Único de Matrícula de la UNMSM.
 
 ## Descripción
 
-El sistema permite iniciar sesión con usuario y contraseña, ingresar datos de alumnos, registrar notas, calcular el promedio final y mostrar si el alumno está aprobado o desaprobado.
+El sistema simula una intranet académica básica para alumnos. Permite iniciar sesión con usuario y contraseña, consultar notas registradas, calcular el promedio final y mostrar el estado académico del alumno.
 
 ## Funcionalidades
 
-- Login con usuario y contraseña.
-- Registro de nombre del alumno.
-- Ingreso de nota de práctica.
-- Ingreso de nota de examen parcial.
+- Login de alumno.
+- Validación de usuario y contraseña.
+- Lectura de usuarios desde usuarios.txt.
+- Lectura de notas desde alumnos.txt.
 - Cálculo automático del promedio.
 - Estado final: Aprobado o Desaprobado.
-- Versión en C++ con archivos `.txt`.
-- Versión web básica con HTML, CSS y JavaScript.
+- Generación de reporte en resultados.txt.
+- Arquitectura preparada para una futura versión web.
 
 ## Estructura del proyecto
 
@@ -23,17 +23,78 @@ El sistema permite iniciar sesión con usuario y contraseña, ingresar datos de 
 Trabajo-del-sistema-de-notas/
 │
 ├── README.md
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   └── app.js
+├── LICENSE
 │
-├── cpp/
-│   ├── main.cpp
-│   ├── alumnos.txt
-│   ├── usuarios.txt
-│   └── resultados.txt
+├── src/
+│    └── main.cpp
+│      
+├── data/
+│    ├── usuarios.txt
+│    └── alumnos.txt
 │
-└── docs/
-    └── capturas/
+├── output/
+│    └── resultados.txt
+│    
+├── docs/
+│    ├── arquitectura.md
+│    ├── manual_usuario.md
+│    └── capturas/
+│
+└── web/
+     ├── index.html
+     ├── login.html
+     ├── panel.html
+     ├── notas.html
+     ├── reporte.html
+     ├── css/
+     │   └── styles.css
+     └── js/
+         └── app.js
+```
+
+## Arquitectura lógica
+
+```txt
+usuario.txt
+     ↓
+Login del alumno
+     ↓
+Validación de credenciales
+     ↓
+Panel académico
+     ↓
+Consulta de notas
+     ↓ 
+Cálculo de promedio
+     ↓
+Estado final
+     ↓
+resultados.txt
+```
+
+## Fórmula 
+```
+Promedio = (Práctica + Parcial) / 2
+```
+
+## Criterio
+```
+Promedio >= 12 → Aprobado
+Promedio < 12  → Desaprobado
+```
+
+## Compilación:
+```
+g++ src/main.cpp -o sistema
+```
+
+## Ejecución:
+```
+./sistema
+```
+
+## Autor:
+```
+Renzo Cienfuegos - Universidad Nacional Mayor de San Marcos
+```
+
