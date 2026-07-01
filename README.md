@@ -33,7 +33,8 @@ Trabajo-del-sistema-de-notas/
 │    └── alumnos.txt
 │
 ├── output/
-│    └── resultados.txt
+│    ├── aprobados.txt
+│    └── desaprobados.txt
 │    
 ├── docs/
 │    ├── arquitectura.md
