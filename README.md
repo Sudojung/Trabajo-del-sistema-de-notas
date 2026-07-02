@@ -38,8 +38,7 @@ Trabajo-del-sistema-de-notas/
 │    
 ├── docs/
 │    ├── arquitectura.md
-│    ├── manual_usuario.md
-│    └── capturas/
+│    └── manual_usuario.md    
 │
 └── web/
      ├── index.html
