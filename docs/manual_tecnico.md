@@ -22,6 +22,9 @@ Antes de ejecutar el proyecto es necesario contar con:
 ```text
 Trabajo-del-sistema-de-notas/
 │
+├── README.md
+├── LICENSE
+│
 ├── src/
 │   └── main.cpp
 │
@@ -29,10 +32,24 @@ Trabajo-del-sistema-de-notas/
 │   └── alumnos.txt
 │
 ├── output/
-│   └── alumnos.txt 
+│   ├── aprobados.txt
+│   └── desaprobados.txt
+│
 ├── docs/
+│   ├── arquitectura.md
+│   ├── manual_tecnico.md
+│   └── capturas/ (opcional)
 │
 └── web/
+    ├── index.html
+    ├── login.html
+    ├── panel.html
+    ├── notas.html
+    ├── reporte.html
+    ├── css/
+    │   └── styles.css
+    └── js/
+        └── app.js
 ```
 
 La carpeta **web/** corresponde a un prototipo de la futura versión web del sistema y no es necesaria para ejecutar la aplicación en C++.
