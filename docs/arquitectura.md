@@ -134,6 +134,30 @@ Contiene únicamente los alumnos aprobados.
 
 Contiene únicamente los alumnos desaprobados.
 
+# Lógica de negocio
+
+El sistema calcula automáticamente el promedio académico de cada alumno utilizando las notas de práctica y examen parcial.
+
+## Fórmula del promedio
+
+```text
+Promedio = (Práctica + Parcial) / 2
+```
+
+## Criterio de aprobación
+
+```text
+Promedio >= 12.00 → Aprobado
+Promedio < 12.00  → Desaprobado
+```
+
+El estado académico se determina automáticamente después del cálculo del promedio y es utilizado para:
+
+- Mostrar el estado del alumno en el listado.
+- Mostrar el estado al consultar un alumno.
+- Clasificar los alumnos en los reportes de aprobados y desaprobados.
+- Calcular las estadísticas generales del sistema.
+
 
 # Tecnologías utilizadas
 
@@ -145,5 +169,11 @@ Contiene únicamente los alumnos desaprobados.
 
 # Mejoras futuras
 
-Esta versión corresponde a una implementación funcional inicial del sistema.
+Esta versión corresponde a una implementación funcional inicial del sistema. Entre las posibles mejoras se consideran:
 
+- Integración con una base de datos (SQLite o MySQL).
+- Gestión de múltiples cursos.
+- Registro de docentes.
+- Exportación de reportes en formato PDF.
+- Interfaz gráfica de usuario.
+- Integración completa con la versión web desarrollada en HTML, CSS y JavaScript.
