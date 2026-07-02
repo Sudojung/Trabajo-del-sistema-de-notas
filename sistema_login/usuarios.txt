@@ -1,3 +1,0 @@
-juan123 1234 Juan
-maria01 5678 Maria
-pedro99 1111 Pedro
