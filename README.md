@@ -52,47 +52,6 @@ Trabajo-del-sistema-de-notas/
          └── app.js
 ```
 
-## Arquitectura lógica
-
-```txt
-usuario.txt
-     ↓
-Login del alumno
-     ↓
-Validación de credenciales
-     ↓
-Panel académico
-     ↓
-Consulta de notas
-     ↓ 
-Cálculo de promedio
-     ↓
-Estado final
-     ↓
-resultados.txt
-```
-
-## Fórmula 
-```
-Promedio = (Práctica + Parcial) / 2
-```
-
-## Criterio
-```
-Promedio >= 12 → Aprobado
-Promedio < 12  → Desaprobado
-```
-
-## Compilación:
-```
-g++ src/main.cpp -o sistema
-```
-
-## Ejecución:
-```
-./sistema
-```
-
 ## Autor:
 ```
 Renzo Cienfuegos - Universidad Nacional Mayor de San Marcos
