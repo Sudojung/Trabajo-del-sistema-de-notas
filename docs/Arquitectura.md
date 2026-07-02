@@ -10,41 +10,34 @@ La persistencia de los datos se realiza mediante archivos de texto (`.txt`), sim
 
 # Arquitectura general
 
+El sistema está organizado en cuatro componentes principales:
+
 ```text
-                     ┌────────────────────────┐
-                     │  Inicio del programa   │
-                     └────────────┬───────────┘
-                                  │
-                                  ↓
-                     ┌────────────────────────┐
-                     │ Cargar alumnos.txt     │
-                     └────────────┬───────────┘
-                                  │
-                                  ↓
-                     ┌────────────────────────┐
-                     │ Login del administrador│
-                     └────────────┬───────────┘
-                                  │
-                     ┌────────────┴────────────┐
-                     │ ¿Credenciales válidas?  │
-                     └───────┬─────────┬───────┘
-                             │Sí       │No
-                             ↓         ↓
-                  ┌────────────────┐  Fin
-                  │ Menú principal │
-                  └───────┬────────┘
-                          │
-                          ▼
-        ┌────────────────────────────────────────────┐
-        │ 1. Listar alumnos                          │
-        │ 2. Buscar alumno                           │
-        │ 3. Registrar alumno                        │
-        │ 4. Editar notas                            │
-        │ 5. Eliminar alumno                         │
-        │ 6. Generar reportes                        │
-        │ 7. Ver estadísticas                        │
-        │ 8. Salir                                   │
-        └────────────────────────────────────────────┘
+ ┌────────────────────────────────────────────┐
+ │           Usuario / Administrador          │
+ │        Interactúa mediante consola         │
+ └─────────────────────┬──────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────┐
+│              Interfaz de consola             │
+│ Login, menú principal y mensajes del sistema │
+└──────────────────────┬───────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────┐
+│              Lógica del sistema             │
+│ Registrar, listar, buscar, editar, eliminar │
+│ calcular promedios y generar estadísticas   │
+└──────────────────────┬──────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────┐
+│              Persistencia de datos          │
+│ data/alumnos.txt                            │
+│ output/aprobados.txt                        │
+│ output/desaprobados.txt                     │
+└─────────────────────────────────────────────┘
 ```
 
 ---
@@ -79,44 +72,69 @@ La persistencia de los datos se realiza mediante archivos de texto (`.txt`), sim
                                                                                        │
                                                                                        ▼
                                                                                 ┌───────────────────────────────────┐
-                                                                                │       Seleccionar una opción      │
-                                                                                └───────────────────┬───────────────┘                                                             
-                                                                                                    │                                                                             
-           ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  
-           │                         │                           │                       │                                  │                         │                         │                     │ 
-           ▼                         ▼                           ▼                       ▼                                  ▼                         ▼                         ▼                     ▼
-    ┌────────────┐             ┌───────────┐             ┌──────────────┐           ┌───────────┐                    ┌────────────┐          ┌────────────────┐         ┌───────────────┐       ┌──────────┐
-    │ Listar     │             │ Buscar    │             │  Registrar   │           │  Editar   │                    │ Eliminar   │          │   Generar      │         │      Ver      │       │   Salir  │
-    │     Alumno │             │    Alumno │             │      Alumno  │           │    Notas  │                    │     Alumno │          │      reportes  │         │  Estadísticas │       └──────────┘
-    └────────────┘             └───────────┘             └──────────────┘           └───────────┘                    └────────────┘          └────────────────┘         └───────────────┘             │
-           │                         │                           │                        │                                 │                         │                         │                     │
-         ¿Hay                      ¿Hay                       Digitar                  Digitar                           Digitar                  ¿Existen                  ¿Existen                  │
-        alumnos?                  alumnos?                    Código                   Código                            Código                    alumnos?                  alumnos?                 │
-           │                         │                           │                        │                                 │                         │                         │                     │
-   ┌──────────────┐           ┌──────────────┐              ¿Es único?                 ¿Existe?                          ¿Existe?              ┌──────────────┐          ┌──────────────┐             │
-  Sí              No         Sí              No                  │                        │                                 │                 Sí              No        Sí              No            │
-   │              │           │              │           ┌──────────────┐          ┌──────────────┐                ┌────────────────┐          │              │          │              │             │
-   │              │           │              │          Sí              No        Sí              No              Sí                No      Genera          Mostrar   Mostrar        Mostrar          │
-Mostrar        Mostrar     Buscar         Mostrar        │              │          │              │                │                │       (+ / -)         mensaje    Datos         mensaje          │
- tabla         mensaje     Código         mensaje     Digitar         Mostrar   Cambiar         Mostrar         ¿Deseas           Mostrar                                                             │
-                              │              ▲         Alumno         mensaje   Practica        mensaje        Eliminarlo?        mensaje                                                             │
-                              │              │           │                         │                               │                                                                                  │
-                           ¿Existe?          │           │                         │                         ┌───────────┐                                                                            │ 
-                              │              │        Digitar                   Cambiar                     Sí           No                                                                           │
-                      ┌──────────────┐       │        Prctica                   Parcial                      │           │                                                                            │
-                     Sí              No ─────┘           │                         │                    Eliminación    Mostrar                                                                        │
-                      │                               Digitar                Actualización                Exitosa      mensaje                                                                        │
-                      │                               Parcial                   Exitosa                                                                                                               │
-                   Mostrar                               │                                                                                                                                            │
-                    Datos                             Registro                                                                                                                                        │
-                                                      Exitoso                                                                                                                                         │
-                                                                                                                                                                                                      ▼
-                                                                                                                                                                                               ┌────────────┐
-                                                                                                                                                                                               │    Fin     │
-                                                                                                                                                                                               └────────────┘
+┌─────────────────────────────────────────────────────────────────────────────→ │       Seleccionar una opción      │
+│                                                                               └───────────────────┬───────────────┘                                                             
+│                                                                                                   │                                                                             
+│          ┌─────────────────────────┬───────────────────────────┬───────────────────────┬──────────────────────────────────┬─────────────────────────┬─────────────────────────┬─────────────────────┐  
+│          │                         │                           │                       │                                  │                         │                         │                     │ 
+│          ▼                         ▼                           ▼                       ▼                                  ▼                         ▼                         ▼                     ▼
+│   ┌────────────┐             ┌───────────┐             ┌──────────────┐           ┌───────────┐                    ┌────────────┐          ┌────────────────┐         ┌───────────────┐       ┌──────────┐
+│   │ Listar     │             │ Buscar    │             │  Registrar   │           │  Editar   │                    │ Eliminar   │          │   Generar      │         │      Ver      │       │   Salir  │
+│   │     Alumno │             │    Alumno │             │      Alumno  │           │    Notas  │                    │     Alumno │          │      reportes  │         │  Estadísticas │       └──────────┘
+│   └────────────┘             └───────────┘             └──────────────┘           └───────────┘                    └────────────┘          └────────────────┘         └───────────────┘             │
+│          │                         │                           │                        │                                 │                         │                         │                     │
+│        ¿Hay                      ¿Hay                      Ingresar                 Ingresar                          Ingresar                  ¿Existen                  ¿Existen                  │
+│       alumnos?                  alumnos?                    Código                   Código                            Código                    alumnos?                  alumnos?                 │
+│          │                         │                           │                        │                                 │                         │                         │                     │
+│   ┌─────────────┐           ┌──────────────┐            Validar código            Validar código                    Validar código            ┌─────────────┐           ┌─────────────┐             │
+│  Sí             No         Sí              No                  │                        │                                 │                  Sí             No         Sí             No            │
+│   │             │           │              │               ¿Existe?                 ¿Existe?                          ¿Existe?                │             │           │             │             │
+│   │             │           │              │                   │                        │                                 │                   │             │           │             │             │
+│   │             │           │              │           ┌──────────────┐          ┌──────────────┐                ┌────────────────┐           │             │           │             │             │
+│   │             │           │              │          Sí              No        Sí              No              Sí                No        Crear          No hay    Mostrar        No hay          │
+│Mostrar       No existe    Buscar        No existe      │              │          │              │                │                │        aprobados     datos para   Datos       datos para        │
+│tabla          registro    Código        el alumno    Usar         Ingresar    Cambiar        No existe        ¿Deseas          No existe      ↓           reportar      │           mostrar         │
+│   │             │           │              ▲ │      editar         nombre      notas         el alumno       Eliminarlo?       el alumno     Crear          │           │             │             │
+│   │             │           │              │ │       notas            │          │              │                │                │       desaprobados      │           │             │             │
+│   │             │        ¿Existe?          │ │         │              │          │              │          ┌───────────┐          │           │             │           │             │             │ 
+│   │             │           │              │ │         │           Ingresar  Recalcular         │         Sí           No         │        Alojar en        │           │             │             │
+│   │             │   ┌──────────────┐       │ │         │            notas     promedio          │          │           │          │         \output         │           │             │             │
+│   │             │  Sí              No ─────┘ │         │              │          │              │     Eliminar      Operación     │           │             │           │             │             │
+│   │             │   │                        │         │           Calcular  Guardar en         │     Registro      cancelada     │           │             │           │             │             │
+│   │             │   │                        │         │           Promedio  alumnos.txt        │          │           │          │           │             │           │             │             │
+│   │             │Mostrar                     │         │              │          │              │     Guardar en       │          │           │             │           │             │             │
+│   │             │ Datos                      │         │          Guardar en     │              │     alumnos.txt      │          │           │             │           │             │             │
+│   │             │   │                        │         │          alumnos.txt    │              │          │           │          │           │             │           │             │             │
+│   │             │   │                        │         │              │          │              │          │           │          │           │             │           │             │             ▼
+│   │             │   │                        │         │              │          │              │          │           │          │           │             │           │             │      ┌────────────┐
+│   │             │   │                        │         │              │          │              │          │           │          │           │             │           │             │      │    Fin     │
+└───┴─────────────┴───┴────────────────────────┴─────────┴──────────────┴──────────┴──────────────┴──────────┴───────────┴──────────┴───────────┴─────────────┴───────────┴─────────────┘      └────────────┘
+```
+# Archivos utilizados
 
+### alumnos.txt
+
+Almacena toda la información de los alumnos.
+
+Formato:
 
 ```
+Codigo|Nombre|Practica|Parcial
+```
+
+---
+
+### aprobados.txt
+
+Contiene únicamente los alumnos aprobados.
+
+---
+
+### desaprobados.txt
+
+Contiene únicamente los alumnos desaprobados.
+
+
 # Tecnologías utilizadas
 
 - Lenguaje C++17
@@ -124,3 +142,8 @@ Mostrar        Mostrar     Buscar         Mostrar        │              │   
 - Programación modular
 - Archivos de texto (.txt)
 - Microsoft Visual C++ Compiler (MSVC)
+
+# Mejoras futuras
+
+Esta versión corresponde a una implementación funcional inicial del sistema.
+
