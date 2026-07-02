@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Alumnos - Sistema de Notas</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body onload="cargarGestionAlumnos()">
+  <header class="topbar">
+    <div class="logo-small">UNMSM</div>
+    <div>
+      <h1>Gestión de Alumnos</h1>
+      <p>Registro, búsqueda, edición y eliminación</p>
+    </div>
+    <a href="panel.html" class="btn-small">Volver</a>
+  </header>
+
+  <main class="content">
+    <section class="card-wide tabs">
+      <button onclick="mostrarSeccion('listar')">Listar</button>
+      <button onclick="mostrarSeccion('buscar')">Buscar</button>
+      <button onclick="mostrarSeccion('registrar')">Registrar</button>
+      <button onclick="mostrarSeccion('editar')">Editar</button>
+      <button onclick="mostrarSeccion('eliminar')">Eliminar</button>
+    </section>
+
+    <section class="card-wide section" id="listar">
+      <h2>Lista de alumnos</h2>
+      <div id="tablaAlumnos"></div>
+    </section>
+
+    <section class="card-wide section hidden" id="buscar">
+      <h2>Buscar alumno</h2>
+      <label>Código del alumno</label>
+      <input id="buscarCodigo" placeholder="Ejemplo: 2 o 00000002" />
+      <button onclick="buscarAlumnoWeb()">Buscar</button>
+      <div id="resultadoBusqueda" class="result-box"></div>
+    </section>
+
+    <section class="card-wide section hidden" id="registrar">
+      <h2>Registrar alumno</h2>
+      <label>Código</label>
+      <input id="regCodigo" placeholder="Máximo 8 números" />
+      <label>Nombre completo</label>
+      <input id="regNombre" placeholder="Solo letras y espacios" />
+      <label>Nota de práctica</label>
+      <input id="regPractica" type="number" min="0" max="20" step="0.01" />
+      <label>Nota parcial</label>
+      <input id="regParcial" type="number" min="0" max="20" step="0.01" />
+      <button onclick="registrarAlumnoWeb()">Registrar</button>
+      <p id="mensajeRegistro" class="mensaje"></p>
+    </section>
+
+    <section class="card-wide section hidden" id="editar">
+      <h2>Editar notas</h2>
+      <label>Código del alumno</label>
+      <input id="editCodigo" placeholder="Ejemplo: 00000002" />
+      <label>Nueva nota de práctica</label>
+      <input id="editPractica" type="number" min="0" max="20" step="0.01" />
+      <label>Nueva nota parcial</label>
+      <input id="editParcial" type="number" min="0" max="20" step="0.01" />
+      <button onclick="editarAlumnoWeb()">Actualizar notas</button>
+      <p id="mensajeEdicion" class="mensaje"></p>
+    </section>
+
+    <section class="card-wide section hidden" id="eliminar">
+      <h2>Eliminar alumno</h2>
+      <label>Código del alumno</label>
+      <input id="delCodigo" placeholder="Ejemplo: 00000002" />
+      <button onclick="eliminarAlumnoWeb()">Eliminar</button>
+      <p id="mensajeEliminacion" class="mensaje"></p>
+    </section>
+  </main>
+  <script src="js/app.js"></script>
+</body>
+</html>
